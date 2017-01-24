@@ -13,7 +13,7 @@ public class Program {
         SearchEngine searchEngine = new SearchEngine();
 
         //получаем список всех доступных ip-адресов
-        ArrayList<Ip> available = searchEngine.FindAvailable(ip1, ip2);
+        ArrayList<Ip> available = searchEngine.findAvailableIp(ip1, ip2);
 
         //Выводим на экран строковое представление всех доступных ip-адресов
         for (Ip x: available) {

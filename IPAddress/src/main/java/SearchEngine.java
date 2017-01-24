@@ -8,7 +8,7 @@ public class SearchEngine {
         ipAddresses = new ArrayList<Ip>();
     }
 
-    public ArrayList<Ip> FindAvailable(Ip ip1, Ip ip2) {
+    public ArrayList<Ip> findAvailableIp(Ip ip1, Ip ip2) {
 
         //если аргументы расположены не в порядке возрастания, меняем их местами
         if (ip2.getNumberIp() < ip1.getNumberIp()) {

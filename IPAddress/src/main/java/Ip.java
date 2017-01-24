@@ -4,56 +4,44 @@ public class Ip {
     String stringIp;
     long numberIp;
 
+    public Ip(String stringIp, long numberIp) {
+        this.stringIp = stringIp;
+        this.numberIp = numberIp;
+    }
+
     public Ip(String stringIp) {
-        //записываем строковое представление ip-адреса, полученное в качестве аргумента, а затем начинаем вычисление его численного представление
+        //записываем строковое представление ip-адреса, полученное в качестве аргумента
         this.stringIp = stringIp;
 
-        //Переводим строковое представление в массив символов
-        char[] charArray= stringIp.toCharArray();
-        int count = 3;
-        long NumberIp = 0;
-        StringBuilder builder = new StringBuilder(3);
-
-        for (int i=0; i<charArray.length; i++) {
-
-            //В цикле для каждого символа проверяем, является ли он точкой. Если нет, то добавляем этот символ в StringBuilder.
-            if (charArray[i] != '.') {
-                builder.append(charArray[i]);
-            } else {
-
-                //Если же символ является точкой, то значение в StringBuilder приводим сначала к строке, а затем к Integer
-                //И умножаем на необходимое число для получение более удобного для рассчетов численного представления
-                String octet = builder.toString();
-                builder.delete(0, 3);
-                Integer integer = Integer.valueOf(octet);
-                NumberIp += (integer * Math.pow(256, count));
-                count--;
-            }
+        //разделяем строковое ппредставление ip-адреса на массив октетов
+        String[] octets = stringIp.split("\\.");
+        long result = 0;
+        //Для каждого октета получаем его численное представление, а затем увеличиваем результативную переменную
+        for (int i = 0; i < octets.length; i++) {
+            int power = 3 - i;
+            int ip = Integer.parseInt(octets[i]);
+            result += ip * Math.pow(256, power);
         }
-        String octet = builder.toString();
-        Integer integer = Integer.valueOf(octet);
-        NumberIp += (integer * Math.pow(256, count));
-
         //Записываем численное представление ip-адреса в поле объекта
-        this.numberIp = NumberIp;
+        this.numberIp = result;
     }
 
     public Ip(long numberIp) {
         //Записываем численное представление ip-адреса в поле объкта
         this.numberIp = numberIp;
-        StringBuilder builder = new StringBuilder();
 
-        //В цикле вычисляем октеты, и добавляем их в builder
-        for (int i = 3; i > 0; i--) {
-            int octet = (int)(numberIp/(Math.pow(256, i)));
-            numberIp -= (long)(octet * Math.pow(256, i));
-            builder.append(octet);
-            builder.append('.');
+        StringBuilder result = new StringBuilder(15);
+
+        //В цикле вычисляем последний октет, а затем выполняем побитовый сдвиг вправо исходного числа на 8 битов
+        for (int i=0; i<4; i++) {
+            result.insert(0, Long.toString(numberIp & 0xff));
+            if (i<3) {
+                result.insert(0, '.');
+            }
+            numberIp = numberIp >> 8;
         }
-        builder.append(numberIp);
-
-        //Записываем полученное строковое представление ip-адреса в поле объекта
-        this.stringIp = builder.toString();
+        //Записываем строковое представление ip-адреса в поле объекта
+        this.stringIp = result.toString();
     }
 
     public String getStringIp() {

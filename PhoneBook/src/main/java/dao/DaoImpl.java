@@ -14,14 +14,12 @@ public class DaoImpl implements Dao {
     }
 
     public ArrayList<String> getPhoneList(String FIO) {
+        //При вызове данного метода вызывается аналогичный у экземпляра класса phoneBook
         return phoneBook.getPhoneList(FIO);
     }
 
     public void addNew(String FIO, String[] phones) {
+        //При вызове данного метода вызывается аналогичный у экземпляра класса phoneBook
         phoneBook.addNew(FIO, phones);
-    }
-
-    public void showAll() {
-        phoneBook.showAll();
     }
 }

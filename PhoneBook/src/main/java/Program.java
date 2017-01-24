@@ -16,12 +16,15 @@ public class Program {
         Scanner scanner = new Scanner(System.in);
         String FIO;
 
+        //Заполняем телефонную книгу
         service.addNew("Иванов И. И.", "+8 800 2000 500", "+8 800 200 600");
         service.addNew("Петров П.П.", "+8 800 2000 700");
         service.addNew("Сидоров С.С.", "+8 800 2000 800", "+8 800 2000 900", "+8 800 2000 000");
 
         System.out.println("Введите имя пользователя: ");
         FIO = scanner.nextLine();
-        service.getPhoneList(FIO);
+
+        //Выводим на экран список номеров телефона пользователя
+        service.showPhoneList(FIO);
     }
 }
